@@ -3,7 +3,9 @@ module FidorApi
     module DSL
       module Transactions
         def transactions(options = {})
-          fetch(:collection, Model::Transaction, 'transactions', options)
+          path = options['account_no'] ? "accounts/#{options['account_no']}/transactions" : 'transactions'
+          options.delete('account_no')
+          fetch(:collection, Model::Transaction, path, options)
         end
 
         def transaction(id, options = {})
